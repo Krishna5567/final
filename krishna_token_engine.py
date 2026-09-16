@@ -412,10 +412,15 @@ def convert_messages_to_gemini(messages: List[Dict[str, Any]], system_prompt: Op
 
 # Flagship Sub-Second Instant Turbo Models (0.8s - 1.2s first token)
 CANDIDATE_MODELS = [
-    "gemini-flash-lite-latest",
-    "gemini-3.5-flash-lite",
+    "gemini-3-flash-preview",
     "gemini-3.1-flash-lite",
+    "gemini-3.1-flash-lite-preview",
+    "gemini-3.6-flash",
+    "gemini-3.8-flash",
     "gemini-flash-latest",
+    "gemini-flash-lite-latest",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
     "gemini-3.7-flash"
 ]
 
@@ -508,6 +513,8 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
                     break
 
             except urllib.error.HTTPError as he:
+                if he.code == 429:
+                    KeyPool.report_rate_limit(key)
                 EventLogger.log("WARN", f"Model {mod} HTTP {he.code}. Rotating key/model.")
                 continue
             except Exception as e:
@@ -518,25 +525,34 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
             break
 
     if not success:
-        # Fallback direct generation on active 3.5 flash
-        try:
-            k = available_keys[0]
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={k}"
-            payload = {
-                "contents": contents,
-                "generationConfig": {
-                    "temperature": 0.7,
-                    "maxOutputTokens": 65536
-                }
-            }
-            req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"}, method="POST")
-            resp = urllib.request.urlopen(req, timeout=8)
-            d = json.loads(resp.read().decode())
-            text = d["candidates"][0]["content"]["parts"][0]["text"]
-            Telemetry.record_tokens(max(1, len(text) // 4))
-            yield text
-        except Exception as e:
-            EventLogger.log("ERROR", f"All fallbacks exhausted: {e}")
+        # Fallback direct generation across pool keys with high-quota models
+        fallback_models = ["gemini-3-flash-preview", "gemini-3.6-flash", "gemini-3.8-flash", "gemini-3.5-flash"]
+        for k in available_keys:
+            if success:
+                break
+            for fb_mod in fallback_models:
+                try:
+                    url = f"https://generativelanguage.googleapis.com/v1beta/models/{fb_mod}:generateContent?key={k}"
+                    payload = {
+                        "contents": contents,
+                        "generationConfig": {
+                            "temperature": 0.7,
+                            "maxOutputTokens": 65536
+                        }
+                    }
+                    req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"}, method="POST")
+                    resp = urllib.request.urlopen(req, timeout=5)
+                    d = json.loads(resp.read().decode())
+                    text = d["candidates"][0]["content"]["parts"][0]["text"]
+                    if text:
+                        Telemetry.record_tokens(max(1, len(text) // 4))
+                        yield text
+                        success = True
+                        break
+                except Exception:
+                    continue
+
+        if not success:
             yield "Hello! I am ready to assist you on FLASH 3D Unlimited Engine. Please ask your question!"
 
 # ---------------------------------------------------------------------------

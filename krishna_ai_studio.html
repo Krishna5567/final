@@ -3884,8 +3884,9 @@
 
     <!-- SCRIPTS -->
   <script>
-    const API_BASE = window.location.origin;
-    // DAY / NIGHT MODE TOGGLE
+    const API_BASE = (window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.origin === 'null' || !window.location.port)
+      ? 'https://final-8ft2.onrender.com'
+      : window.location.origin;
     function toggleNightMode() {
       const isNight = document.body.classList.toggle('night-mode');
       localStorage.setItem('flash_night_mode', isNight ? 'true' : 'false');
@@ -4935,12 +4936,17 @@
         }
         keyCandidates = keyCandidates.concat(pool);
 
-        // Sub-second instant turbo models (Fastest first for instant sub-second response)
+        // High-quota sub-second instant turbo models (Fastest first with automatic quota rotation)
         const candidateModels = [
-          'gemini-flash-lite-latest',
-          'gemini-3.5-flash-lite',
+          'gemini-3-flash-preview',
           'gemini-3.1-flash-lite',
+          'gemini-3.1-flash-lite-preview',
+          'gemini-3.6-flash',
+          'gemini-3.8-flash',
           'gemini-flash-latest',
+          'gemini-flash-lite-latest',
+          'gemini-3.5-flash',
+          'gemini-3.5-flash-lite',
           'gemini-3.7-flash'
         ];
 
@@ -4965,7 +4971,7 @@
                 temperature: 0.7,
                 maxOutputTokens: 65536
               };
-              if (activeModel.includes('3.7') || activeModel.includes('3.5')) {
+              if (activeModel.includes('3.7') || activeModel.includes('3.5') || activeModel.includes('3.8') || activeModel.includes('3.6')) {
                 if (thinking === 'deep' || model.includes('5.1') || model.includes('3-7')) {
                   genConfig.thinkingConfig = { thinkingBudget: 1024 };
                 } else {
@@ -5107,7 +5113,42 @@
         }
 
         if (!streamSuccess) {
-          aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'Endpoints currently busy. Please try again.')}</span>`;
+          // Automatic Cloud Engine Failover if direct browser keys encountered temporary rate limits
+          try {
+            const cloudPayload = {
+              model: model,
+              messages: messagesPayload,
+              stream: false
+            };
+            const cloudRes = await fetch('https://final-8ft2.onrender.com/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer sk-krishna-pro-default'
+              },
+              body: JSON.stringify(cloudPayload),
+              signal: AbortSignal.timeout(12000)
+            });
+            if (cloudRes.ok) {
+              const cloudData = await cloudRes.json();
+              const ans = cloudData.choices?.[0]?.message?.content || '';
+              if (ans) {
+                aiBubble.innerHTML = renderMarkdown(ans, true);
+                aiBubble.querySelectorAll('pre code').forEach((block) => {
+                  try { hljs.highlightElement(block); } catch (e) {}
+                });
+                CHAT_HISTORY.push({ role: 'assistant', content: ans, time: new Date().toLocaleTimeString() });
+                saveChatHistoryToStorage();
+                streamSuccess = true;
+              }
+            }
+          } catch (cloudErr) {
+            console.warn('[Flash Web] Cloud failover error:', cloudErr);
+          }
+        }
+
+        if (!streamSuccess) {
+          aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'Endpoints currently busy. Please try again in a few moments.')}</span>`;
         }
 
         sendBtn.disabled = false;
