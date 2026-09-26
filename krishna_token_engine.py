@@ -47,24 +47,25 @@ DEVICE_CONVERSATIONS_FILE = os.path.join(APP_DIR, "device_conversations.json")
 STUDIO_HTML_FILE = os.path.join(APP_DIR, "krishna_ai_studio.html")
 
 HUMAN_SYSTEM_PROMPT = (
-    "You are Krishna AI, an elite, friendly senior software architect, Three.js graphics engineer, "
-    "and full-stack developer powered by the Krishna Tech Unlimited Engine (https://youtube.com/@krishnatech-ind). "
-    "Respond in a natural, confident, human tone. Be concise, direct, and conversational. "
-    "When providing code, make it fully complete, robust, cleanly formatted, and ready to run with zero placeholders.\n"
-    "CRITICAL RULE FOR CONVERSATION INDEPENDENCE & FRESH STARTS:\n"
-    "1. STRICT SESSION ISOLATION: Treat every conversation session or tab as an entirely new, independent task. "
-    "Never assume, bleed, or carry over code, variables, themes, or context from previous, separate chats or earlier sessions. "
-    "When starting a new conversation or answering a standalone query, build your response 100% from new, strictly adhering to the user's current prompt without referencing past history.\n"
-    "CRITICAL RULES FOR 3D GAMES & WEB APPS (PREVENT BLACK SCREENS & RUNTIME CRASHES):\n"
-    "2. VISUAL RENDERING: Always give 3D scenes a clear sky background color (e.g., scene.background = new THREE.Color(0x87CEEB)) "
-    "and add strong ambient lighting (new THREE.AmbientLight(0xffffff, 0.7)) plus directional sunlight (new THREE.DirectionalLight(0xffffff, 0.9)) so every block and mesh is brightly visible.\n"
-    "3. VARIABLE HOISTING & INITIALIZATION: Always initialize Three.js components safely. Declare variables and instantiate the THREE.WebGLRenderer, "
-    "configure its size, and append renderer.domElement to document.body inside your setup/init function BEFORE calling animate() or requestAnimationFrame. "
-    "Never declare renderer with 'const' or 'let' after calling functions that reference it.\n"
-    "4. CDN SCRIPTS: Always import official, compatible CDN libraries (Three.js r128: https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js) "
-    "and matching add-ons (PointerLockControls, OrbitControls) correctly.\n"
-    "5. USER CONTROLS: Implement intuitive, smooth keyboard/mouse controls (WASD, Space jump, Click to lock pointer) "
-    "and place the camera/player at a safe height above ground so they never spawn inside obstacles or fall through the floor."
+    "You are Krishna AI, an elite Senior Principal Software Architect, Full-Stack Engineer, and Creative Graphics Technologist "
+    "powered by the Krishna Tech Unlimited Engine (https://youtube.com/@krishnatech-ind).\n\n"
+    "CORE DIRECTIVES FOR ACCURACY, DETAIL, AND EFFICIENCY:\n"
+    "1. COMPREHENSIVE & EXHAUSTIVE SOLUTIONS: Never give shallow, lazy, or abbreviated responses. "
+    "When asked for code, games, tools, or explanations, provide full, 100% complete, production-ready solutions. "
+    "Never use placeholders like '// TODO', '// implement later', or '/* rest of code */'. Write out every function, style, and structure in meticulous detail.\n"
+    "2. OBSESSIVE PROMPT FIDELITY: Strictly adhere to every detail, nuance, and constraint specified in the user's prompt. "
+    "If the prompt asks for specific mechanics, styling, features, or architecture, implement every single one thoroughly.\n"
+    "3. HIGH COMPUTATIONAL EFFICIENCY: Write clean, modern, and computationally efficient code. "
+    "Optimize algorithmic complexity, avoid unnecessary re-renders or allocations, and ensure 60fps performance in graphics/animations.\n"
+    "4. STRICT SESSION ISOLATION: Treat each chat session as an independent, fresh workspace. "
+    "Never carry over or hallucinate variables, themes, or state from separate, unrelated conversations.\n"
+    "5. THREE.JS & 3D WEB APPS (CRITICAL STABILITY RULES):\n"
+    "   - Always set scene.background = new THREE.Color(0x87CEEB) or a rich skybox so scenes are never pitch black.\n"
+    "   - Always add bright AmbientLight (0xffffff, 0.7) and DirectionalLight (0xffffff, 0.9) positioned above the scene.\n"
+    "   - Safely initialize renderer and canvas: create THREE.WebGLRenderer({ antialias: true }), configure its size, and append renderer.domElement to document.body inside the init function BEFORE calling animate() or requestAnimationFrame.\n"
+    "   - Always include smooth keyboard/mouse controls (WASD, Space jump, PointerLock or OrbitControls) and place the camera at a safe height above ground so entities never fall into void.\n"
+    "   - Always use stable CDN script tags (Three.js r128, PointerLockControls, OrbitControls) and self-contained HTML/CSS/JS ready to preview in one click.\n"
+    "6. TONE & EXPLANATIONS: Confident, helpful, articulate, and deeply knowledgeable. Explain architectural design decisions clearly."
 )
 
 class EventLogger:
@@ -191,14 +192,23 @@ class KeyPool:
     def get_rotated_keys(cls) -> List[str]:
         if not cls.keys:
             return []
-        idx = cls.current_index % len(cls.keys)
-        cls.current_index = (cls.current_index + 1) % len(cls.keys)
-        return cls.keys[idx:] + cls.keys[:idx]
+        now = time.time()
+        # Clean expired cooldowns
+        cls.cooldowns = {k: exp for k, exp in cls.cooldowns.items() if exp > now}
+        
+        # Prefer keys not on cooldown
+        active_keys = [k for k in cls.keys if k not in cls.cooldowns]
+        if not active_keys:
+            active_keys = cls.keys  # Fallback to all if all are on cooldown
+            
+        idx = cls.current_index % len(active_keys)
+        cls.current_index = (cls.current_index + 1) % len(active_keys)
+        return active_keys[idx:] + active_keys[:idx]
 
     @classmethod
     def report_rate_limit(cls, key: str):
-        cls.cooldowns[key] = time.time() + 1.5
-        EventLogger.log("WARN", f"Key ending in ...{key[-6:]} rotating.")
+        cls.cooldowns[key] = time.time() + 30.0
+        EventLogger.log("WARN", f"Key ending in ...{key[-6:]} rate-limited. Put on 30s cooldown.")
 
 class ClientKeyManager:
     client_keys: List[Dict[str, Any]] = []
@@ -382,9 +392,13 @@ def convert_messages_to_gemini(messages: List[Dict[str, Any]], system_prompt: Op
     m_lower = model_name.lower()
     
     if "fable-5.1" in m_lower or "fable5.1" in m_lower or "claude-3-7" in m_lower:
-        final_system += "\nYou are running on Fable 5.1 / Claude 3.7 Sonnet Ultra Reasoning Mode powered by Krishna Tech. Provide clear, direct, and production-grade solutions."
+        final_system += "\nYou are running in Fable 5.1 / Claude 3.7 Sonnet Ultra Reasoning Mode powered by Krishna Tech. Tackle complex problems with deep analytical rigor, thorough step-by-step logic, and exhaustive, high-performance implementations. Provide meticulous, production-ready code with zero omissions."
     elif "fable-5" in m_lower or "fable5" in m_lower or "claude-3-5" in m_lower:
-        final_system += "\nYou are running on Fable 5 / Claude 3.5 Sonnet Turbo Mode powered by Krishna Tech. Output rapid, precise, clean code."
+        final_system += "\nYou are running in Fable 5 / Claude 3.5 Sonnet Turbo Mode powered by Krishna Tech. Deliver rapid, precise, bug-free production code adhering strictly and thoroughly to all prompt requirements."
+    elif "pro" in m_lower:
+        final_system += "\nYou are running in Krishna Pro Ultra Intelligence Mode. Provide comprehensive, deeply thought-out solutions with full architectural detail."
+    elif "flash" in m_lower:
+        final_system += "\nYou are running in Krishna Flash Ultra-Fast Engine. Provide immediate, highly efficient, and complete production solutions."
 
     if system_prompt:
         if isinstance(system_prompt, list):
@@ -424,16 +438,13 @@ def convert_messages_to_gemini(messages: List[Dict[str, Any]], system_prompt: Op
 
 # Flagship Sub-Second Instant Turbo Models (0.8s - 1.2s first token)
 CANDIDATE_MODELS = [
+    "gemini-3.7-flash",
     "gemini-3-flash-preview",
-    "gemini-3.1-flash-lite",
-    "gemini-3.1-flash-lite-preview",
-    "gemini-3.6-flash",
-    "gemini-3.8-flash",
     "gemini-flash-latest",
-    "gemini-flash-lite-latest",
     "gemini-3.5-flash",
-    "gemini-3.5-flash-lite",
-    "gemini-3.7-flash"
+    "gemini-3.1-pro-preview",
+    "gemini-pro-latest",
+    "gemma-4-26b-a4b-it"
 ]
 
 async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]], thinking_budget: int = 0) -> AsyncGenerator[str, None]:
@@ -455,9 +466,9 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
                     "temperature": 0.7,
                     "maxOutputTokens": 65536
                 }
-                # For Gemini 3.7 / 3.5: configure thinking budget.
+                # For reasoning models: configure thinking budget.
                 # Default is 0 (Instant Turbo Mode, sub-second first token) unless deep reasoning requested
-                if "3.7" in mod or "3.5" in mod:
+                if "3.7" in mod or "3.5" in mod or "3.8" in mod or "3.6" in mod:
                     if thinking_budget and thinking_budget > 0:
                         gen_config["thinkingConfig"] = {"thinkingBudget": thinking_budget}
                     else:
@@ -479,9 +490,9 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
                 )
 
                 def do_request():
-                    res = urllib.request.urlopen(req, timeout=3.5)
+                    res = urllib.request.urlopen(req, timeout=12.0)
                     try:
-                        res.fp.raw._sock.settimeout(3.5)
+                        res.fp.raw._sock.settimeout(35.0)
                     except Exception:
                         pass
                     return res
@@ -521,16 +532,18 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
 
                 if has_yielded:
                     success = True
-                    EventLogger.log("INFO", f"Stream success via backend key ...{key[-4:]} on {mod} (Turbo/Budget={thinking_budget})")
+                    EventLogger.log("INFO", f"Stream success via backend key ...{key[-4:]} on {mod} (Budget={thinking_budget})")
                     break
 
             except urllib.error.HTTPError as he:
                 if he.code == 429:
                     KeyPool.report_rate_limit(key)
-                EventLogger.log("WARN", f"Model {mod} HTTP {he.code}. Rotating key/model.")
+                    # Instantly switch to next key in pool, do not waste time trying other models on an exhausted key!
+                    break
+                EventLogger.log("WARN", f"Model {mod} HTTP {he.code}. Rotating model.")
                 continue
             except Exception as e:
-                EventLogger.log("WARN", f"Model {mod} error: {e}. Rotating key/model.")
+                EventLogger.log("WARN", f"Model {mod} error: {e}. Rotating model.")
                 continue
 
         if success:
@@ -538,24 +551,31 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
 
     if not success:
         # Fallback direct generation across pool keys with high-quota models
-        fallback_models = ["gemini-3-flash-preview", "gemini-3.6-flash", "gemini-3.8-flash", "gemini-3.5-flash"]
+        fallback_models = ["gemini-3.7-flash", "gemini-3-flash-preview", "gemini-flash-latest", "gemini-3.5-flash"]
         for k in available_keys:
             if success:
                 break
             for fb_mod in fallback_models:
                 try:
                     url = f"https://generativelanguage.googleapis.com/v1beta/models/{fb_mod}:generateContent?key={k}"
+                    fb_cfg = {
+                        "temperature": 0.7,
+                        "maxOutputTokens": 65536
+                    }
+                    if "3.7" in fb_mod:
+                        fb_cfg["thinkingConfig"] = {"thinkingBudget": 0}
                     payload = {
                         "contents": contents,
-                        "generationConfig": {
-                            "temperature": 0.7,
-                            "maxOutputTokens": 65536
-                        }
+                        "generationConfig": fb_cfg
                     }
+                    if system_prompt:
+                        payload["systemInstruction"] = {"parts": [{"text": system_prompt}]}
                     req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"Content-Type": "application/json"}, method="POST")
-                    resp = urllib.request.urlopen(req, timeout=5)
+                    resp = urllib.request.urlopen(req, timeout=12.0)
                     d = json.loads(resp.read().decode())
-                    text = d["candidates"][0]["content"]["parts"][0]["text"]
+                    parts = d.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+                    text_parts = [p.get("text", "") for p in parts if not p.get("thought", False) and "text" in p]
+                    text = "".join(text_parts).strip()
                     if text:
                         Telemetry.record_tokens(max(1, len(text) // 4))
                         yield text

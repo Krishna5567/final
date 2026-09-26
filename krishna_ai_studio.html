@@ -3885,7 +3885,7 @@
     <!-- SCRIPTS -->
   <script>
     const API_BASE = (window.location.protocol === 'file:' || window.location.hostname.includes('github.io') || window.location.origin === 'null' || !window.location.port)
-      ? 'https://final-8ft2.onrender.com'
+      ? 'https://final-z8sv.onrender.com'
       : window.location.origin;
     function toggleNightMode() {
       const isNight = document.body.classList.toggle('night-mode');
@@ -4950,16 +4950,12 @@
 
         // High-quota sub-second instant turbo models (Fastest first with automatic quota rotation)
         const candidateModels = [
+          'gemini-3.7-flash',
           'gemini-3-flash-preview',
-          'gemini-3.1-flash-lite',
-          'gemini-3.1-flash-lite-preview',
-          'gemini-3.6-flash',
-          'gemini-3.8-flash',
           'gemini-flash-latest',
-          'gemini-flash-lite-latest',
           'gemini-3.5-flash',
-          'gemini-3.5-flash-lite',
-          'gemini-3.7-flash'
+          'gemini-3.1-pro-preview',
+          'gemini-pro-latest'
         ];
 
         const contents = CHAT_HISTORY.slice(-12).map(m => ({
@@ -4976,7 +4972,7 @@
           for (const activeModel of candidateModels) {
             if (streamSuccess) break;
             const fetchCtrl = new AbortController();
-            const fetchTimer = setTimeout(() => fetchCtrl.abort(), 4000);
+            const fetchTimer = setTimeout(() => fetchCtrl.abort(), 16000);
             try {
               const url = `https://generativelanguage.googleapis.com/v1beta/models/${activeModel}:streamGenerateContent?alt=sse&key=${activeKey}`;
               const genConfig = {
@@ -4984,8 +4980,8 @@
                 maxOutputTokens: 65536
               };
               if (activeModel.includes('3.7') || activeModel.includes('3.5') || activeModel.includes('3.8') || activeModel.includes('3.6')) {
-                if (thinking === 'deep' || model.includes('5.1') || model.includes('3-7')) {
-                  genConfig.thinkingConfig = { thinkingBudget: 1024 };
+                if (thinking === 'deep') {
+                  genConfig.thinkingConfig = { thinkingBudget: 2048 };
                 } else {
                   genConfig.thinkingConfig = { thinkingBudget: 0 };
                 }
@@ -4995,7 +4991,7 @@
                 generationConfig: genConfig,
                 systemInstruction: {
                   parts: [{
-                    text: "You are Krishna AI, an elite senior game developer, Three.js graphics engineer, and software architect powered by Krishna Tech (https://youtube.com/@krishnatech-ind). Answer naturally, directly, warmly, and provide complete, 100% bug-free production code when asked.\nCRITICAL RULE FOR CONVERSATION INDEPENDENCE & FRESH STARTS:\n1. STRICT SESSION ISOLATION: Treat every conversation session or tab as an entirely new, independent task. Never assume, bleed, or carry over code, variables, themes, or context from previous, separate chats or earlier sessions. When starting a new conversation or answering a standalone query, build your response 100% from new, strictly adhering to the user's current prompt without referencing past history.\nCRITICAL RULES FOR 3D GAMES & WEB APPS:\n2. Never produce blank, black, or broken canvases.\n3. In Three.js: Always create the WebGLRenderer, set its size, and append renderer.domElement to document.body inside your init function BEFORE calling animate(). Never declare renderer with const/let after calling functions that use it.\n4. Always set a vibrant scene.background color (e.g. 0x87CEEB) and add strong ambient and directional lighting so all blocks and 3D geometry are brightly visible.\n5. Ensure complete HTML/CSS/JS with full player controls (WASD, Space, mouse look) and zero placeholders."
+                    text: "You are Krishna AI, an elite Senior Principal Software Architect, Full-Stack Engineer, and Creative Graphics Technologist powered by Krishna Tech (https://youtube.com/@krishnatech-ind).\n\nCORE DIRECTIVES FOR ACCURACY, DETAIL, AND EFFICIENCY:\n1. COMPREHENSIVE & EXHAUSTIVE SOLUTIONS: Never give shallow, lazy, or abbreviated responses. When asked for code, games, tools, or explanations, provide full, 100% complete, production-ready solutions. Never use placeholders like '// TODO', '// implement later', or '/* rest of code */'. Write out every function, style, and structure in meticulous detail.\n2. OBSESSIVE PROMPT FIDELITY: Strictly adhere to every detail, nuance, and constraint specified in the user's prompt. If the prompt asks for specific mechanics, styling, features, or architecture, implement every single one thoroughly.\n3. HIGH COMPUTATIONAL EFFICIENCY: Write clean, modern, and computationally efficient code. Optimize algorithmic complexity, avoid unnecessary re-renders or allocations, and ensure 60fps performance in graphics/animations.\n4. STRICT SESSION ISOLATION: Treat each chat session as an independent, fresh workspace. Never carry over or hallucinate variables, themes, or state from separate, unrelated conversations.\n5. THREE.JS & 3D WEB APPS (CRITICAL STABILITY RULES):\n   - Always set scene.background = new THREE.Color(0x87CEEB) or a rich skybox so scenes are never pitch black.\n   - Always add bright AmbientLight (0xffffff, 0.7) and DirectionalLight (0xffffff, 0.9) positioned above the scene.\n   - Safely initialize renderer and canvas: create THREE.WebGLRenderer({ antialias: true }), configure its size, and append renderer.domElement to document.body inside the init function BEFORE calling animate() or requestAnimationFrame.\n   - Always include smooth keyboard/mouse controls (WASD, Space jump, PointerLock or OrbitControls) and place the camera at a safe height above ground so entities never fall into void.\n   - Always use stable CDN script tags (Three.js r128, PointerLockControls, OrbitControls) and self-contained HTML/CSS/JS ready to preview in one click.\n6. TONE & EXPLANATIONS: Confident, helpful, articulate, and deeply knowledgeable. Explain architectural design decisions clearly."
                   }]
                 }
               };
@@ -5012,6 +5008,10 @@
                 const errJson = await response.json().catch(() => ({}));
                 lastErrorMsg = (errJson.error && errJson.error.message) || `HTTP error ${response.status}`;
                 console.warn(`[Flash Web] Failover from ${activeModel}: ${lastErrorMsg}`);
+                if (response.status === 429) {
+                  // Instantly hop to next key candidate
+                  continue keyLoop;
+                }
                 continue;
               }
 
@@ -5039,53 +5039,54 @@
                     try {
                       const data = JSON.parse(line.substring(5).trim());
                       const candidate = data.candidates?.[0];
-                      const part = candidate?.content?.parts?.[0];
-                      if (part && part.thought) continue;
-                      const delta = part?.text || '';
-                      if (delta) {
-                        const now = performance.now();
-                        if (!firstChunkTime) firstChunkTime = now;
+                      const parts = candidate?.content?.parts || [];
+                      for (const part of parts) {
+                        if (part.thought) continue;
+                        const delta = part?.text || '';
+                        if (delta) {
+                          const now = performance.now();
+                          if (!firstChunkTime) firstChunkTime = now;
 
-                        accumulatedText += delta;
-                        const chunkTokens = Math.max(1, Math.round(delta.length / 3.4));
-                        tokenCount += chunkTokens;
-                        currentTokensCount += chunkTokens;
+                          accumulatedText += delta;
+                          const chunkTokens = Math.max(1, Math.round(delta.length / 3.4));
+                          tokenCount += chunkTokens;
+                          currentTokensCount += chunkTokens;
 
-                        recentTokensWindow.push({ t: now, n: chunkTokens });
-                        const cutoff = now - 600;
-                        recentTokensWindow = recentTokensWindow.filter(item => item.t >= cutoff);
+                          recentTokensWindow.push({ t: now, n: chunkTokens });
+                          const cutoff = now - 600;
+                          recentTokensWindow = recentTokensWindow.filter(item => item.t >= cutoff);
 
-                        let liveSpeed = 0;
-                        if (recentTokensWindow.length > 1) {
-                          const windowTime = (now - recentTokensWindow[0].t) / 1000;
-                          const windowTokens = recentTokensWindow.reduce((acc, curr) => acc + curr.n, 0);
-                          if (windowTime > 0.02) {
-                            liveSpeed = Math.round(windowTokens / windowTime);
+                          let liveSpeed = 0;
+                          if (recentTokensWindow.length > 1) {
+                            const windowTime = (now - recentTokensWindow[0].t) / 1000;
+                            const windowTokens = recentTokensWindow.reduce((acc, curr) => acc + curr.n, 0);
+                            if (windowTime > 0.02) {
+                              liveSpeed = Math.round(windowTokens / windowTime);
+                            }
                           }
+
+                          const streamElapsed = (now - firstChunkTime) / 1000;
+                          const overallSpeed = streamElapsed > 0.05 ? Math.round(tokenCount / streamElapsed) : 260;
+
+                          let displaySpeed;
+                          if (liveSpeed >= 200) {
+                            displaySpeed = Math.min(385, liveSpeed);
+                          } else {
+                            const velocityRatio = Math.min(1, Math.max(0.15, (liveSpeed || overallSpeed) / 160));
+                            displaySpeed = Math.round(210 + (velocityRatio * 115) + (Math.sin(tokenCount * 0.45) * 16));
+                          }
+                          displaySpeed = Math.max(205, Math.min(385, displaySpeed));
+
+                          finalSpeed = `${displaySpeed}.0`;
+                          const speedEl = document.getElementById('telemetry-speed-text');
+                          if (speedEl) {
+                            const displayModel = activeModel.includes('3.7') ? 'krishna-3.7-flash' : 'krishna-pro';
+                            speedEl.textContent = `Streaming (${displayModel})... ~${displaySpeed} tokens/s (${currentTokensCount.toLocaleString()} tokens)`;
+                          }
+
+                          aiBubble.innerHTML = renderMarkdown(accumulatedText, false);
+                          chatContainer.scrollTop = chatContainer.scrollHeight;
                         }
-
-                        const streamElapsed = (now - firstChunkTime) / 1000;
-                        const overallSpeed = streamElapsed > 0.05 ? Math.round(tokenCount / streamElapsed) : 260;
-
-                        // Dynamic real-time velocity mapped naturally between 200 - 350+ tokens/s
-                        let displaySpeed;
-                        if (liveSpeed >= 200) {
-                          displaySpeed = Math.min(385, liveSpeed);
-                        } else {
-                          const velocityRatio = Math.min(1, Math.max(0.15, (liveSpeed || overallSpeed) / 160));
-                          displaySpeed = Math.round(210 + (velocityRatio * 115) + (Math.sin(tokenCount * 0.45) * 16));
-                        }
-                        displaySpeed = Math.max(205, Math.min(385, displaySpeed));
-
-                        finalSpeed = `${displaySpeed}.0`;
-                        const speedEl = document.getElementById('telemetry-speed-text');
-                        if (speedEl) {
-                          const displayModel = activeModel.includes('3.7') ? 'krishna-3.7-flash' : 'krishna-pro';
-                          speedEl.textContent = `Streaming (${displayModel})... ~${displaySpeed} tokens/s (${currentTokensCount.toLocaleString()} tokens)`;
-                        }
-
-                        aiBubble.innerHTML = renderMarkdown(accumulatedText, false);
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
                       }
                     } catch (e) {}
                   }
@@ -5132,7 +5133,7 @@
               messages: messagesPayload,
               stream: false
             };
-            const cloudRes = await fetch('https://final-8ft2.onrender.com/v1/chat/completions', {
+            const cloudRes = await fetch('https://final-z8sv.onrender.com/v1/chat/completions', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
