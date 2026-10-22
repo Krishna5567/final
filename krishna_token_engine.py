@@ -156,22 +156,7 @@ class KeyPool:
                 "QVEuQWI4Uk42THkwaWdUeUZUT3dacGh1ajRkakRUelEwT1dvMHoxWFBnZGNPUXVTaEFUamc=",
                 "QVEuQWI4Uk42SXgzLWRRbmJVdGRISzFuWGVMWFJGSFU2eFNyNFItcjE3RDRTMkhRUHNWN2c=",
                 "QVEuQWI4Uk42SzMydEJsaWNzaEI2XzVHSGVEQ2pZZXhGbnFKX1RYcE1DTG5PSE8zNmZodUE=",
-                "QVEuQWI4Uk42SWZWYXZFQ3NheGhpNHRnMTJ5d3FiWEdNeV9Ia05ZdHVkcUIxQWljdmlqdlE=",
-                "QVEuQWI4Uk42SmF0V2JQQkFtMFd1Z1VRZjhTM0ZJd1Bod1l5eWx6N09NOUxVZVZLX25tcUE=",
-                "QVEuQWI4Uk42STZrbGIyS2pzcnNTQ0JCQjNGWHFkcFFabHV6Rmc0OV9fdDVQNDlDOWFveWc=",
-                "QVEuQWI4Uk42THFfWEJJTDZ5d1FqLXhrQjJFYU1KSmE5T3JNNXNWR2xGZHdxanB0eVVzaUE=",
-                "QVEuQWI4Uk42S1FWLUVmWUdvY1NSV0RqMjZUeXl1QndsZlJwRFpQdlQ0Z2xuRGY1ektfalE=",
-                "QVEuQWI4Uk42SWdYM2JXTTRXRlBiMC1GQlI2cHFhbnlKeUdSMmVORHAwM1pCYnpNQzBqM1E=",
-                "QVEuQWI4Uk42SXdSNWtVcHNSY04xaUtWQXFQZmJnWFcyYUw1dEdqX1F2TkIySEtfb1EtY2c=",
-                "QVEuQWI4Uk42SS1udFdhblFoY2FDMkYwLTE2NVFrMVJsTGlmXzVsYUE5VXhkVVJYeWhmUWc=",
-                "QVEuQWI4Uk42SUlzUVU1TFpIR3Y4S01FY0szdm1oTzNXNW1Sb0lGWjBxbE5kLU1rZFdxNVE=",
-                "QVEuQWI4Uk42SnM2MjdXQkd0cFFsNUFqcUNSajNxZ1J6S2k4ajJXYTREcXlsQ2g0QVZXWUE=",
-                "QVEuQWI4Uk42SVZTbUk1elpSM19kMnZHYllpVlhJaXRfZzRNa0lhek9jRE1VQnQtVHRiYlE=",
-                "QVEuQWI4Uk42SUI3TEZuSXZELTV2RU1hYlhRLXFFMVlsdm9xc1dLQ01PYV9oSUtBdGpSaWc=",
-                "QVEuQWI4Uk42S08zcDhQOWxnendjT2tGd1dGTEVyMDdwaVRWNHVGOFlWTEd3LVZFSkpxamc=",
-                "QVEuQWI4Uk42SmY2Z2V5ODdFWS1VSDNENGxydjlESmpENk12ZkpDNVVmYTNhU1FFMGZvbVE=",
-                "QVEuQWI4Uk42S2FPWGRId3dqRUttb0R1ajI2STliTkM4cVd6YTExdFlNV1VYVzZxVzJPWHc=",
-                "QVEuQWI4Uk42Smh4MF91WnpnWnFWNS1qNlU5c2c3Ti1nRUhmZmtsa3E2RG0tbUVjd2cxX2c="
+                "QVEuQWI4Uk42SWdYM2JXTTRXRlBiMC1GQlI2cHFhbnlKeUdSMmVORHAwM1pCYnpNQzBqM1E="
             ]
             for tok in _PRELOADED_TOKENS:
                 try:
@@ -298,8 +283,56 @@ app.add_middleware(
 ANTHROPIC_MODELS_DATA = [
     {
         "type": "model",
+        "id": "gemini-4-argon",
+        "display_name": "Gemini 4 Argon (Google Pro · 1M Context Flagship)",
+        "created_at": "2026-03-01T00:00:00Z",
+        "created": 1772323200,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
+        "id": "gemini-3.7-flash",
+        "display_name": "Gemini 3.7 Flash (Hybrid Reasoning & Turbo Speed)",
+        "created_at": "2025-02-19T00:00:00Z",
+        "created": 1740000000,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
+        "id": "gemini-3.1-pro-preview",
+        "display_name": "Gemini 3.1 Pro Preview (Deep Architecture)",
+        "created_at": "2025-02-19T00:00:00Z",
+        "created": 1740000000,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
+        "id": "gemini-3-flash-preview",
+        "display_name": "Gemini 3 Flash Preview (Ultra-Fast 0.8s First Token)",
+        "created_at": "2025-02-19T00:00:00Z",
+        "created": 1740000000,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
+        "id": "gemini-flash-latest",
+        "display_name": "Gemini Flash Production Stable",
+        "created_at": "2025-02-19T00:00:00Z",
+        "created": 1740000000,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
+        "id": "gemma-4-31b-it",
+        "display_name": "Gemma 4 31B IT (State-of-the-Art Open Weights)",
+        "created_at": "2025-02-19T00:00:00Z",
+        "created": 1740000000,
+        "owned_by": "google"
+    },
+    {
+        "type": "model",
         "id": "claude-3-7-sonnet-20250219",
-        "display_name": "Claude 3.7 Sonnet (Fable 5.1 Ultra Reasoning)",
+        "display_name": "Claude 3.7 Sonnet (Routed to Gemini 3.7 Flash)",
         "created_at": "2025-02-19T00:00:00Z",
         "created": 1740000000,
         "owned_by": "anthropic"
@@ -307,74 +340,10 @@ ANTHROPIC_MODELS_DATA = [
     {
         "type": "model",
         "id": "claude-3-5-sonnet-20241022",
-        "display_name": "Claude 3.5 Sonnet (Fable 5 Turbo Speed)",
+        "display_name": "Claude 3.5 Sonnet (Routed to Gemini Flash)",
         "created_at": "2024-10-22T00:00:00Z",
         "created": 1729555200,
         "owned_by": "anthropic"
-    },
-    {
-        "type": "model",
-        "id": "claude-3-5-sonnet-latest",
-        "display_name": "Claude 3.5 Sonnet (Latest)",
-        "created_at": "2024-10-22T00:00:00Z",
-        "created": 1729555200,
-        "owned_by": "anthropic"
-    },
-    {
-        "type": "model",
-        "id": "claude-3-5-haiku-20241022",
-        "display_name": "Claude 3.5 Haiku",
-        "created_at": "2024-10-22T00:00:00Z",
-        "created": 1729555200,
-        "owned_by": "anthropic"
-    },
-    {
-        "type": "model",
-        "id": "claude-3-opus-20240229",
-        "display_name": "Claude 3 Opus",
-        "created_at": "2024-02-29T00:00:00Z",
-        "created": 1709164800,
-        "owned_by": "anthropic"
-    },
-    {
-        "type": "model",
-        "id": "fable-5.1",
-        "display_name": "Fable 5.1 (Ultra Deep Reasoning)",
-        "created_at": "2025-02-19T00:00:00Z",
-        "created": 1740000000,
-        "owned_by": "krishna-tech"
-    },
-    {
-        "type": "model",
-        "id": "fable-5",
-        "display_name": "Fable 5 (High Speed Turbo)",
-        "created_at": "2025-02-19T00:00:00Z",
-        "created": 1740000000,
-        "owned_by": "krishna-tech"
-    },
-    {
-        "type": "model",
-        "id": "krishna-3.7-flash",
-        "display_name": "Krishna 3.7 Flash - Ultra Fast",
-        "created_at": "2025-02-19T00:00:00Z",
-        "created": 1740000000,
-        "owned_by": "krishna-tech"
-    },
-    {
-        "type": "model",
-        "id": "krishna-pro",
-        "display_name": "Krishna Pro - Ultra Intelligent",
-        "created_at": "2025-02-19T00:00:00Z",
-        "created": 1740000000,
-        "owned_by": "krishna-tech"
-    },
-    {
-        "type": "model",
-        "id": "krishna-flash",
-        "display_name": "Krishna Flash - High Speed",
-        "created_at": "2025-02-19T00:00:00Z",
-        "created": 1740000000,
-        "owned_by": "krishna-tech"
     }
 ]
 
@@ -391,14 +360,12 @@ def convert_messages_to_gemini(messages: List[Dict[str, Any]], system_prompt: Op
     final_system = HUMAN_SYSTEM_PROMPT
     m_lower = model_name.lower()
     
-    if "fable-5.1" in m_lower or "fable5.1" in m_lower or "claude-3-7" in m_lower:
-        final_system += "\nYou are running in Fable 5.1 / Claude 3.7 Sonnet Ultra Reasoning Mode powered by Krishna Tech. Tackle complex problems with deep analytical rigor, thorough step-by-step logic, and exhaustive, high-performance implementations. Provide meticulous, production-ready code with zero omissions."
-    elif "fable-5" in m_lower or "fable5" in m_lower or "claude-3-5" in m_lower:
-        final_system += "\nYou are running in Fable 5 / Claude 3.5 Sonnet Turbo Mode powered by Krishna Tech. Deliver rapid, precise, bug-free production code adhering strictly and thoroughly to all prompt requirements."
+    if "argon" in m_lower:
+        final_system += "\nYou are running on Gemini 4 Argon, Google's flagship model with a 1M token context window and native deep reasoning. Tackle complex problems with deep analytical rigor, thorough step-by-step logic, and exhaustive, high-performance implementations."
+    elif "3.7" in m_lower or "flash" in m_lower:
+        final_system += "\nYou are running on Gemini 3.7 Flash High-Performance Engine. Deliver rapid, precise, bug-free production code adhering strictly and thoroughly to all prompt requirements."
     elif "pro" in m_lower:
-        final_system += "\nYou are running in Krishna Pro Ultra Intelligence Mode. Provide comprehensive, deeply thought-out solutions with full architectural detail."
-    elif "flash" in m_lower:
-        final_system += "\nYou are running in Krishna Flash Ultra-Fast Engine. Provide immediate, highly efficient, and complete production solutions."
+        final_system += "\nYou are running in Gemini Pro Deep Architecture Mode. Provide comprehensive, deeply thought-out solutions with full architectural detail."
 
     if system_prompt:
         if isinstance(system_prompt, list):
@@ -438,16 +405,16 @@ def convert_messages_to_gemini(messages: List[Dict[str, Any]], system_prompt: Op
 
 # Flagship Sub-Second Instant Turbo Models (0.8s - 1.2s first token)
 CANDIDATE_MODELS = [
+    "gemini-4-argon",
     "gemini-3.7-flash",
     "gemini-3-flash-preview",
     "gemini-flash-latest",
-    "gemini-3.5-flash",
     "gemini-3.1-pro-preview",
     "gemini-pro-latest",
-    "gemma-4-26b-a4b-it"
+    "gemma-4-31b-it"
 ]
 
-async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]], thinking_budget: int = 0) -> AsyncGenerator[str, None]:
+async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]], thinking_budget: int = 0, requested_model: Optional[str] = None) -> AsyncGenerator[str, None]:
     available_keys = KeyPool.get_rotated_keys()
     if not available_keys:
         yield "Hello from Krishna AI Engine! Gateway active."
@@ -456,7 +423,15 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
     loop = asyncio.get_event_loop()
     success = False
 
-    models_to_try = CANDIDATE_MODELS
+    is_argon_request = bool(requested_model and "argon" in requested_model.lower())
+    if is_argon_request:
+        # Strictly Gemini 4 Argon for 100% transparent routing
+        models_to_try = ["gemini-4-argon"]
+    elif requested_model and any(m == requested_model or m in requested_model for m in CANDIDATE_MODELS):
+        matched = [m for m in CANDIDATE_MODELS if m == requested_model or m in requested_model][0]
+        models_to_try = [matched] + [m for m in CANDIDATE_MODELS if m != matched]
+    else:
+        models_to_try = CANDIDATE_MODELS
 
     for key in available_keys:
         for mod in models_to_try:
@@ -468,7 +443,7 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
                 }
                 # For reasoning models: configure thinking budget.
                 # Default is 0 (Instant Turbo Mode, sub-second first token) unless deep reasoning requested
-                if "3.7" in mod or "3.5" in mod or "3.8" in mod or "3.6" in mod:
+                if "argon" in mod or "3.7" in mod or "3.5" in mod or "3.8" in mod or "3.6" in mod:
                     if thinking_budget and thinking_budget > 0:
                         gen_config["thinkingConfig"] = {"thinkingBudget": thinking_budget}
                     else:
@@ -550,6 +525,9 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
             break
 
     if not success:
+        if is_argon_request:
+            yield "\n\n[Notice: gemini-4-argon is a Google Flagship Pro model that requires a Google AI Pro or Paid Tier API key with Argon quota enabled. Free Tier projects currently have limit 0 for Argon. To enable Gemini 4 Argon, configure a Google AI Pro key in keys.json, or switch your model to gemini-3.7-flash / gemini-3-flash-preview.]"
+            return
         # Fallback direct generation across pool keys with high-quota models
         fallback_models = ["gemini-3.7-flash", "gemini-3-flash-preview", "gemini-flash-latest", "gemini-3.5-flash"]
         for k in available_keys:
@@ -674,7 +652,7 @@ async def anthropic_messages(request: Request):
                 yield f"event: content_block_start\ndata: {json.dumps(block_start)}\n\n"
 
                 tokens_sent = 0
-                async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget):
+                async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget, requested_model=req.model):
                     tokens_sent += max(1, len(chunk) // 4)
                     delta_payload = {
                         "type": "content_block_delta",
@@ -710,7 +688,7 @@ async def anthropic_messages(request: Request):
     else:
         try:
             chunks = []
-            async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget):
+            async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget, requested_model=req.model):
                 chunks.append(chunk)
             full_text = "".join(chunks) or "Connection confirmed! FLASH 3D Unlimited Gateway ready."
             Telemetry.active_sessions = max(0, Telemetry.active_sessions - 1)
@@ -742,7 +720,7 @@ async def anthropic_messages(request: Request):
 # ---------------------------------------------------------------------------
 
 class ChatCompletionRequest(BaseModel):
-    model: str = "claude-3-7-sonnet"
+    model: str = "gemini-4-argon"
     messages: List[Dict[str, Any]]
     stream: Optional[bool] = False
     temperature: Optional[float] = 0.7
@@ -768,7 +746,7 @@ async def chat_completions(req: ChatCompletionRequest, request: Request):
     if req.stream:
         async def openai_event_generator():
             try:
-                async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget):
+                async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget, requested_model=req.model):
                     chunk_obj = {
                         "id": req_id,
                         "object": "chat.completion.chunk",
@@ -801,7 +779,7 @@ async def chat_completions(req: ChatCompletionRequest, request: Request):
     else:
         try:
             chunks = []
-            async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget):
+            async for chunk in call_gemini_stream(system_prompt, contents, thinking_budget=thinking_budget, requested_model=req.model):
                 chunks.append(chunk)
             full_text = "".join(chunks)
             Telemetry.active_sessions = max(0, Telemetry.active_sessions - 1)

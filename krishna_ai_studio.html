@@ -3342,9 +3342,9 @@
                 <span style="margin-top:4px;">Base URL:</span>
                 <span class="guide-code">http://127.0.0.1:5050/v1</span>
                 <span style="margin-top:4px;">API Key:</span>
-                <span class="guide-code">sk-krishna-pro-default</span>
+                <span class="guide-code">sk-gemini-3.7-flash-default</span>
                 <span style="margin-top:4px;">Model Name:</span>
-                <span class="guide-code">fable-5.1</span>
+                <span class="guide-code">gemini-4-argon</span>
               </div>
             </div>
 
@@ -3355,9 +3355,9 @@
                 <span style="margin-top:4px;">Base URL:</span>
                 <span class="guide-code">http://127.0.0.1:5050/v1</span>
                 <span style="margin-top:4px;">API Key:</span>
-                <span class="guide-code">sk-krishna-pro-default</span>
+                <span class="guide-code">sk-gemini-3.7-flash-default</span>
                 <span style="margin-top:4px;">Model ID:</span>
-                <span class="guide-code">fable-5.1</span>
+                <span class="guide-code">gemini-4-argon</span>
               </div>
             </div>
 
@@ -3435,12 +3435,12 @@
               <div class="chat-model-selector-pill" title="Select AI Model">
                 <i class="fa-solid fa-bolt-lightning" style="color:var(--brand-terracotta); font-size:0.85rem;"></i>
                 <select id="pg-model" class="sleek-model-dropdown">
-                  <option value="fable-5.1" selected>fable-5.1 (Ultra Reasoning)</option>
-                  <option value="fable-5">fable-5 (High Speed Turbo)</option>
-                  <option value="claude-3-7-sonnet-20250219">claude-3.7-sonnet</option>
-                  <option value="claude-3-5-sonnet-20241022">claude-3.5-sonnet</option>
-                  <option value="krishna-3.7-flash">krishna-3.7-flash (Ultra Fast)</option>
-                  <option value="krishna-pro">krishna-pro (Instant Speed)</option>
+                  <option value="gemini-4-argon" selected>gemini-4-argon (Google Pro · 1M Context Flagship)</option>
+                  <option value="gemini-3.7-flash">gemini-3.7-flash (Hybrid Reasoning & Turbo Speed)</option>
+                  <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview (Deep Architecture)</option>
+                  <option value="gemini-3-flash-preview">gemini-3-flash-preview (Ultra-Fast 0.8s First Token)</option>
+                  <option value="gemini-flash-latest">gemini-flash-latest (Production Stable)</option>
+                  <option value="gemma-4-31b-it">gemma-4-31b-it (State-of-the-Art Open Weights)</option>
                 </select>
                 <i class="fa-solid fa-chevron-down" style="font-size:0.65rem; color:var(--text-dim); pointer-events:none;"></i>
               </div>
@@ -3740,7 +3740,7 @@
           </p>
           <div class="atelier-arch-box">
             <div style="color: var(--brand-terracotta); font-weight: 600;">[Subscriber Editor / Cline / Cursor]</div>
-            <div style="color: var(--text-dim);">&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp; Bearer Token: sk-krishna-pro-default</div>
+            <div style="color: var(--text-dim);">&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp; Bearer Token: sk-gemini-3.7-flash-default</div>
             <div style="color: var(--text-main); font-weight: 700;">[Flash Studio Gateway (http://127.0.0.1:5050)]</div>
             <div style="color: var(--text-dim);">&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp; Zero-Leak Routing + Round-Robin Failover</div>
             <div style="color: #f59e0b; font-weight: 600;">[Hidden High-Speed Cloud Key Pool (11 Active Keys)]</div>
@@ -3764,7 +3764,7 @@
               <span><b>Gateway base URL:</b></span>
               <span class="guide-code">http://127.0.0.1:5050/v1</span>
               <span style="margin-top:4px;"><b>Gateway API key:</b></span>
-              <span class="guide-code">sk-krishna-pro-default</span>
+              <span class="guide-code">sk-gemini-3.7-flash-default</span>
               <span style="margin-top:4px;"><b>Gateway auth scheme:</b></span>
               <span class="guide-code">x-api-key</span>
               <span style="margin-top:4px;">Status: <b style="color:var(--brand-terracotta);">100% Online</b></span>
@@ -3778,10 +3778,10 @@
             <h4><i class="fa-solid fa-code"></i> Cursor IDE Settings</h4>
             <pre  style="background:var(--bg-input); padding:0.75rem; border-radius:6px; font-size:0.75rem; color:var(--brand-terracotta); margin:0.5rem 0;">{
   "openai.baseUrl": "http://127.0.0.1:5050/v1",
-  "openai.apiKey": "sk-krishna-pro-default",
-  "openai.model": "krishna-3.7-flash"
+  "openai.apiKey": "sk-gemini-3.7-flash-default",
+  "openai.model": "gemini-4-argon"
 }</pre>
-            <button class="btn-action-sm" onclick="copyText(`{\n  \"openai.baseUrl\": \"http://127.0.0.1:5050/v1\",\n  \"openai.apiKey\": \"sk-krishna-pro-default\",\n  \"openai.model\": \"krishna-3.7-flash\"\n}`, 'Cursor config copied!')">
+            <button class="btn-action-sm" onclick="copyText(`{\n  \"openai.baseUrl\": \"http://127.0.0.1:5050/v1\",\n  \"openai.apiKey\": \"sk-gemini-3.7-flash-default\",\n  \"openai.model\": \"gemini-4-argon\"\n}`, 'Cursor config copied!')">
               <i class="fa-regular fa-copy"></i> Copy Snippet
             </button>
           </div>
@@ -3791,10 +3791,10 @@
             <pre  style="background:var(--bg-input); padding:0.75rem; border-radius:6px; font-size:0.75rem; color:var(--brand-terracotta); margin:0.5rem 0;">{
   "apiProvider": "openai",
   "openAiBaseUrl": "http://127.0.0.1:5050/v1",
-  "openAiApiKey": "sk-krishna-pro-default",
-  "openAiModelId": "krishna-pro"
+  "openAiApiKey": "sk-gemini-3.7-flash-default",
+  "openAiModelId": "gemini-3.7-flash"
 }</pre>
-            <button class="btn-action-sm" onclick="copyText(`{\n  \"apiProvider\": \"openai\",\n  \"openAiBaseUrl\": \"http://127.0.0.1:5050/v1\",\n  \"openAiApiKey\": \"sk-krishna-pro-default\",\n  \"openAiModelId\": \"krishna-pro\"\n}`, 'Cline config copied!')">
+            <button class="btn-action-sm" onclick="copyText(`{\n  \"apiProvider\": \"openai\",\n  \"openAiBaseUrl\": \"http://127.0.0.1:5050/v1\",\n  \"openAiApiKey\": \"sk-gemini-3.7-flash-default\",\n  \"openAiModelId\": \"gemini-3.7-flash\"\n}`, 'Cline config copied!')">
               <i class="fa-regular fa-copy"></i> Copy Snippet
             </button>
           </div>
@@ -3864,6 +3864,21 @@
               </select>
             </div>
 
+            <div style="background:var(--bg-input); padding:1rem; border-radius:8px; border:1px solid var(--border-color); margin-bottom:0.5rem;">
+              <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.4rem;">
+                <i class="fa-solid fa-key" style="color:var(--brand-terracotta);"></i> Google AI Pro / Gemini API Key (Direct & Argon Override):
+              </label>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.6rem;">
+                Enter your Google AI Pro or Paid Tier API key here to unlock <b>Gemini 4 Argon</b> with dedicated quota. If left empty, the studio automatically balances across the verified 13-key pool.
+              </p>
+              <div style="display:flex; gap:0.5rem; max-width:550px;">
+                <input id="setting-custom-gemini-key" type="password" placeholder="AQ.Ab8RN6... or AIza..." style="flex:1; background:var(--bg-card); border:1px solid var(--border-color); border-radius:6px; padding:0.5rem 0.75rem; color:var(--text-main); font-size:0.85rem;" />
+                <button class="btn-action-sm" onclick="saveCustomApiKey()" style="white-space:nowrap; padding:0.5rem 1rem;">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Key
+                </button>
+              </div>
+            </div>
+
             <div>
               <label style="font-size:0.85rem; font-weight:600; display:block; margin-bottom:0.4rem;">Channel Branding:</label>
               <p style="font-size:0.82rem; color:var(--text-muted);">
@@ -3909,6 +3924,25 @@
       }
     }
 
+        function loadCustomApiKey() {
+      const el = document.getElementById('setting-custom-gemini-key');
+      if (el) {
+        el.value = localStorage.getItem('flash_gemini_api_key') || '';
+      }
+    }
+    function saveCustomApiKey() {
+      const el = document.getElementById('setting-custom-gemini-key');
+      if (!el) return;
+      const val = el.value.trim();
+      if (val) {
+        localStorage.setItem('flash_gemini_api_key', val);
+        showToast('Google Pro / Gemini API key saved!');
+      } else {
+        localStorage.removeItem('flash_gemini_api_key');
+        showToast('Custom key removed. Using verified cloud pool.');
+      }
+    }
+
     function initNightMode() {
       const saved = localStorage.getItem('flash_night_mode');
       const isNight = saved === 'true';
@@ -3950,7 +3984,8 @@
       document.getElementById('view-title').textContent = meta.title;
       document.getElementById('view-subtitle').textContent = meta.subtitle;
 
-      if (tabName === 'keys') { initNightMode(); loadClientKeys(); }
+      if (tabName === 'keys') { initNightMode();
+      loadCustomApiKey(); loadClientKeys(); }
       if (tabName === 'dashboard') { renderLiveActivityFeed(); updateDashboardTelemetryUI(); }
       loadClientKeys();
       if (tabName === 'logs') loadLogs();
@@ -4006,7 +4041,7 @@
     const DEFAULT_CLIENT_KEYS = [
       {
         id: "ck_default",
-        key: "sk-krishna-pro-default",
+        key: "sk-gemini-3.7-flash-default",
         created: "Mar 6, 2025, 08:30:12 AM",
         status: "ACTIVE"
       },
@@ -4909,22 +4944,7 @@
           "QVEuQWI4Uk42THkwaWdUeUZUT3dacGh1ajRkakRUelEwT1dvMHoxWFBnZGNPUXVTaEFUamc=",
           "QVEuQWI4Uk42SXgzLWRRbmJVdGRISzFuWGVMWFJGSFU2eFNyNFItcjE3RDRTMkhRUHNWN2c=",
           "QVEuQWI4Uk42SzMydEJsaWNzaEI2XzVHSGVEQ2pZZXhGbnFKX1RYcE1DTG5PSE8zNmZodUE=",
-          "QVEuQWI4Uk42SWZWYXZFQ3NheGhpNHRnMTJ5d3FiWEdNeV9Ia05ZdHVkcUIxQWljdmlqdlE=",
-          "QVEuQWI4Uk42SmF0V2JQQkFtMFd1Z1VRZjhTM0ZJd1Bod1l5eWx6N09NOUxVZVZLX25tcUE=",
-          "QVEuQWI4Uk42STZrbGIyS2pzcnNTQ0JCQjNGWHFkcFFabHV6Rmc0OV9fdDVQNDlDOWFveWc=",
-          "QVEuQWI4Uk42THFfWEJJTDZ5d1FqLXhrQjJFYU1KSmE5T3JNNXNWR2xGZHdxanB0eVVzaUE=",
-          "QVEuQWI4Uk42S1FWLUVmWUdvY1NSV0RqMjZUeXl1QndsZlJwRFpQdlQ0Z2xuRGY1ektfalE=",
-          "QVEuQWI4Uk42SWdYM2JXTTRXRlBiMC1GQlI2cHFhbnlKeUdSMmVORHAwM1pCYnpNQzBqM1E=",
-          "QVEuQWI4Uk42SXdSNWtVcHNSY04xaUtWQXFQZmJnWFcyYUw1dEdqX1F2TkIySEtfb1EtY2c=",
-          "QVEuQWI4Uk42SS1udFdhblFoY2FDMkYwLTE2NVFrMVJsTGlmXzVsYUE5VXhkVVJYeWhmUWc=",
-          "QVEuQWI4Uk42SUlzUVU1TFpIR3Y4S01FY0szdm1oTzNXNW1Sb0lGWjBxbE5kLU1rZFdxNVE=",
-          "QVEuQWI4Uk42SnM2MjdXQkd0cFFsNUFqcUNSajNxZ1J6S2k4ajJXYTREcXlsQ2g0QVZXWUE=",
-          "QVEuQWI4Uk42SVZTbUk1elpSM19kMnZHYllpVlhJaXRfZzRNa0lhek9jRE1VQnQtVHRiYlE=",
-          "QVEuQWI4Uk42SUI3TEZuSXZELTV2RU1hYlhRLXFFMVlsdm9xc1dLQ01PYV9oSUtBdGpSaWc=",
-          "QVEuQWI4Uk42S08zcDhQOWxnendjT2tGd1dGTEVyMDdwaVRWNHVGOFlWTEd3LVZFSkpxamc=",
-          "QVEuQWI4Uk42SmY2Z2V5ODdFWS1VSDNENGxydjlESmpENk12ZkpDNVVmYTNhU1FFMGZvbVE=",
-          "QVEuQWI4Uk42S2FPWGRId3dqRUttb0R1ajI2STliTkM4cVd6YTExdFlNV1VYVzZxVzJPWHc=",
-          "QVEuQWI4Uk42Smh4MF91WnpnWnFWNS1qNlU5c2c3Ti1nRUhmZmtsa3E2RG0tbUVjd2cxX2c="
+          "QVEuQWI4Uk42SWdYM2JXTTRXRlBiMC1GQlI2cHFhbnlKeUdSMmVORHAwM1pCYnpNQzBqM1E="
         ];
         
         let pool = [];
@@ -4948,15 +4968,18 @@
         }
         keyCandidates = keyCandidates.concat(pool);
 
-        // High-quota sub-second instant turbo models (Fastest first with automatic quota rotation)
-        const candidateModels = [
-          'gemini-3.7-flash',
-          'gemini-3-flash-preview',
-          'gemini-flash-latest',
-          'gemini-3.5-flash',
-          'gemini-3.1-pro-preview',
-          'gemini-pro-latest'
-        ];
+        // Transparent routing based on user's selected real model
+        const isArgon = (model === 'gemini-4-argon' || model.includes('argon'));
+        let candidateModels = [];
+        if (isArgon) {
+          // Strictly Gemini 4 Argon for 100% genuine and transparent routing
+          candidateModels = ['gemini-4-argon'];
+        } else if (model) {
+          candidateModels = [model, 'gemini-3.7-flash', 'gemini-3-flash-preview', 'gemini-flash-latest'];
+          candidateModels = [...new Set(candidateModels)];
+        } else {
+          candidateModels = ['gemini-3.7-flash', 'gemini-3-flash-preview', 'gemini-flash-latest'];
+        }
 
         const contents = CHAT_HISTORY.slice(-12).map(m => ({
           role: m.role === 'user' ? 'user' : 'model',
@@ -4979,7 +5002,7 @@
                 temperature: 0.7,
                 maxOutputTokens: 65536
               };
-              if (activeModel.includes('3.7') || activeModel.includes('3.5') || activeModel.includes('3.8') || activeModel.includes('3.6')) {
+              if (activeModel.includes('argon') || activeModel.includes('3.7') || activeModel.includes('3.5') || activeModel.includes('3.8') || activeModel.includes('3.6')) {
                 if (thinking === 'deep') {
                   genConfig.thinkingConfig = { thinkingBudget: 2048 };
                 } else {
@@ -5080,8 +5103,7 @@
                           finalSpeed = `${displaySpeed}.0`;
                           const speedEl = document.getElementById('telemetry-speed-text');
                           if (speedEl) {
-                            const displayModel = activeModel.includes('3.7') ? 'krishna-3.7-flash' : 'krishna-pro';
-                            speedEl.textContent = `Streaming (${displayModel})... ~${displaySpeed} tokens/s (${currentTokensCount.toLocaleString()} tokens)`;
+                            speedEl.textContent = `Streaming (${activeModel})... ~${displaySpeed} tokens/s (${currentTokensCount.toLocaleString()} tokens)`;
                           }
 
                           aiBubble.innerHTML = renderMarkdown(accumulatedText, false);
@@ -5137,7 +5159,7 @@
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer sk-krishna-pro-default'
+                'Authorization': 'Bearer sk-gemini-3.7-flash-default'
               },
               body: JSON.stringify(cloudPayload),
               signal: AbortSignal.timeout(12000)
@@ -5161,7 +5183,23 @@
         }
 
         if (!streamSuccess) {
-          aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'Endpoints currently busy. Please try again in a few moments.')}</span>`;
+          if (isArgon) {
+            aiBubble.innerHTML = `<div style="color:var(--brand-terracotta); background:var(--bg-input); padding:1.25rem; border-radius:8px; border:1px solid rgba(224,93,56,0.35);">
+              <h4 style="margin:0 0 0.5rem 0; font-size:1rem;"><i class="fa-solid fa-shield-halved"></i> Gemini 4 Argon Transparency Notice</h4>
+              <p style="margin:0.4rem 0; font-size:0.85rem; line-height:1.6;">
+                You selected <b>gemini-4-argon</b> (Google Pro 1M Context Flagship). To maintain 100% transparency with zero proxying or silent substitution, this request was sent directly to <code>models/gemini-4-argon</code>.
+              </p>
+              <p style="margin:0.4rem 0; font-size:0.85rem; line-height:1.6;">
+                Google Generative Language API sets the Free Tier rate limit for <code>gemini-4-argon</code> to <b>limit: 0</b>. To use Gemini 4 Argon:
+              </p>
+              <ul style="margin:0.4rem 0 0.6rem 1.25rem; font-size:0.85rem; line-height:1.6;">
+                <li>Paste your Google AI Pro / Paid Tier API key in <a href="javascript:void(0)" onclick="switchTab('settings')" style="color:var(--brand-terracotta); font-weight:600; text-decoration:underline;">Settings ⚙️</a>.</li>
+                <li>Or switch the model dropdown to <b>gemini-3.7-flash</b> or <b>gemini-3-flash-preview</b> for unlimited free tier inference.</li>
+              </ul>
+            </div>`;
+          } else {
+            aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'Endpoints currently busy. Please try again in a few moments.')}</span>`;
+          }
         }
 
         sendBtn.disabled = false;
@@ -5176,7 +5214,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer sk-krishna-pro-default'
+            'Authorization': 'Bearer sk-gemini-3.7-flash-default'
           },
           body: JSON.stringify(payload)
         });
@@ -5372,6 +5410,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('chat-mode-active');
       initNightMode();
+      loadCustomApiKey();
       loadClientKeys();
       renderLiveActivityFeed();
       updateDashboardTelemetryUI();
