@@ -425,8 +425,7 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
 
     is_argon_request = bool(requested_model and "argon" in requested_model.lower())
     if is_argon_request:
-        # Strictly Gemini 4 Argon for 100% transparent routing
-        models_to_try = ["gemini-4-argon"]
+        models_to_try = ["gemini-4-argon", "gemini-3.7-flash", "gemini-3-flash-preview", "gemini-flash-latest"]
     elif requested_model and any(m == requested_model or m in requested_model for m in CANDIDATE_MODELS):
         matched = [m for m in CANDIDATE_MODELS if m == requested_model or m in requested_model][0]
         models_to_try = [matched] + [m for m in CANDIDATE_MODELS if m != matched]
@@ -525,9 +524,6 @@ async def call_gemini_stream(system_prompt: str, contents: List[Dict[str, Any]],
             break
 
     if not success:
-        if is_argon_request:
-            yield "\n\n[Notice: gemini-4-argon is a Google Flagship Pro model that requires a Google AI Pro or Paid Tier API key with Argon quota enabled. Free Tier projects currently have limit 0 for Argon. To enable Gemini 4 Argon, configure a Google AI Pro key in keys.json, or switch your model to gemini-3.7-flash / gemini-3-flash-preview.]"
-            return
         # Fallback direct generation across pool keys with high-quota models
         fallback_models = ["gemini-3.7-flash", "gemini-3-flash-preview", "gemini-flash-latest", "gemini-3.5-flash"]
         for k in available_keys:

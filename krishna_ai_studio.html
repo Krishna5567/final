@@ -3435,8 +3435,8 @@
               <div class="chat-model-selector-pill" title="Select AI Model">
                 <i class="fa-solid fa-bolt-lightning" style="color:var(--brand-terracotta); font-size:0.85rem;"></i>
                 <select id="pg-model" class="sleek-model-dropdown">
-                  <option value="gemini-4-argon" selected>gemini-4-argon (Google Pro · 1M Context Flagship)</option>
-                  <option value="gemini-3.7-flash">gemini-3.7-flash (Hybrid Reasoning & Turbo Speed)</option>
+                  <option value="gemini-3.7-flash" selected>gemini-3.7-flash (Hybrid Reasoning & Turbo Speed)</option>
+                  <option value="gemini-4-argon">gemini-4-argon (Google Pro · 1M Context Flagship)</option>
                   <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview (Deep Architecture)</option>
                   <option value="gemini-3-flash-preview">gemini-3-flash-preview (Ultra-Fast 0.8s First Token)</option>
                   <option value="gemini-flash-latest">gemini-flash-latest (Production Stable)</option>
@@ -4972,8 +4972,8 @@
         const isArgon = (model === 'gemini-4-argon' || model.includes('argon'));
         let candidateModels = [];
         if (isArgon) {
-          // Strictly Gemini 4 Argon for 100% genuine and transparent routing
-          candidateModels = ['gemini-4-argon'];
+          // Try gemini-4-argon first; if Google limits it, seamlessly continue with gemini-3.7-flash
+          candidateModels = ['gemini-4-argon', 'gemini-3.7-flash', 'gemini-3-flash-preview', 'gemini-flash-latest'];
         } else if (model) {
           candidateModels = [model, 'gemini-3.7-flash', 'gemini-3-flash-preview', 'gemini-flash-latest'];
           candidateModels = [...new Set(candidateModels)];
@@ -5183,23 +5183,7 @@
         }
 
         if (!streamSuccess) {
-          if (isArgon) {
-            aiBubble.innerHTML = `<div style="color:var(--brand-terracotta); background:var(--bg-input); padding:1.25rem; border-radius:8px; border:1px solid rgba(224,93,56,0.35);">
-              <h4 style="margin:0 0 0.5rem 0; font-size:1rem;"><i class="fa-solid fa-shield-halved"></i> Gemini 4 Argon Transparency Notice</h4>
-              <p style="margin:0.4rem 0; font-size:0.85rem; line-height:1.6;">
-                You selected <b>gemini-4-argon</b> (Google Pro 1M Context Flagship). To maintain 100% transparency with zero proxying or silent substitution, this request was sent directly to <code>models/gemini-4-argon</code>.
-              </p>
-              <p style="margin:0.4rem 0; font-size:0.85rem; line-height:1.6;">
-                Google Generative Language API sets the Free Tier rate limit for <code>gemini-4-argon</code> to <b>limit: 0</b>. To use Gemini 4 Argon:
-              </p>
-              <ul style="margin:0.4rem 0 0.6rem 1.25rem; font-size:0.85rem; line-height:1.6;">
-                <li>Paste your Google AI Pro / Paid Tier API key in <a href="javascript:void(0)" onclick="switchTab('settings')" style="color:var(--brand-terracotta); font-weight:600; text-decoration:underline;">Settings ⚙️</a>.</li>
-                <li>Or switch the model dropdown to <b>gemini-3.7-flash</b> or <b>gemini-3-flash-preview</b> for unlimited free tier inference.</li>
-              </ul>
-            </div>`;
-          } else {
-            aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'Endpoints currently busy. Please try again in a few moments.')}</span>`;
-          }
+          aiBubble.innerHTML = `<span style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Response generation error: ${escapeHtml(lastErrorMsg || 'All key quotas currently busy. Please retry in a few moments.')}</span>`;
         }
 
         sendBtn.disabled = false;
